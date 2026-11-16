@@ -1,0 +1,5 @@
+{
+  "_comment": "人工确认过的分类。by_id 优先于 by_counterparty，二者都优先于规则引擎。",
+  "by_id": {},
+  "by_counterparty": {}
+}

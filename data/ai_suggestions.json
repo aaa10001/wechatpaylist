@@ -1,0 +1,13 @@
+{
+  "_comment": "AI 对规则覆盖不到的长尾商户给出的分类建议。source=ai 表示未经人工确认，报告中单独统计；人工在界面上确认后会写入 overrides.json 并升为 override。",
+  "generated_by": "DeepSeek（依据商户名/商品名的语义判断，未访问外部数据）",
+  "suggestions": {
+    "双星名人": { "category": "购物", "confidence": 0.9, "reason": "鞋服品牌门店" },
+    "橙子家万象汇店": { "category": "餐饮", "confidence": 0.7, "reason": "商场内的水果/甜品店" },
+    "田园乐人": { "category": "购物", "confidence": 0.6, "reason": "疑似农产品/生鲜零售" },
+    "山东省财金文旅发展有限公司": { "category": "娱乐", "confidence": 0.6, "reason": "景区文创与小吃，归入休闲消费" },
+    "苏北人": { "category": "餐饮", "confidence": 0.6, "reason": "餐饮店名" },
+    "优尚超市宾馆": { "category": "购物", "confidence": 0.6, "reason": "名称含超市，按零售处理" },
+    "一切拜托": { "category": "购物", "confidence": 0.5, "reason": "预付卡消费，暂归零售" }
+  }
+}

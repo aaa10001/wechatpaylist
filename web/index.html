@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MoneyLens · 个人收支与预算分析</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="masthead">
+  <div class="mast-inner">
+    <div class="brand">
+      <span class="wordmark">MoneyLens</span>
+      <span class="issue" id="subtitle">个人收支与预算分析</span>
+    </div>
+    <div class="mast-actions">
+      <button class="btn ghost" id="btnExport" title="导出人工确认结果，用于回写 overrides.json">导出确认</button>
+      <button class="btn" id="btnAdd">记一笔</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="ledger" id="kpis"></section>
+
+  <div class="toolbar">
+    <span class="toolbar-label">统计范围</span>
+    <div class="range" id="rangeChips"></div>
+    <span class="toolbar-note" id="rangeNote"></span>
+  </div>
+
+  <div class="grid two">
+    <section class="panel">
+      <div class="panel-head">
+        <h2>月度趋势</h2>
+        <span class="note">柱为消费总额，线为日均；浅色柱为不完整月</span>
+      </div>
+      <div id="monthlyChart" class="chart"></div>
+    </section>
+    <section class="panel">
+      <div class="panel-head">
+        <h2>消费构成</h2>
+        <span class="note" id="donutHint"></span>
+      </div>
+      <div class="donut-wrap">
+        <div id="donut" class="donut"></div>
+        <div id="legend" class="legend"></div>
+      </div>
+    </section>
+  </div>
+
+  <section class="panel">
+    <div class="panel-head">
+      <h2>日消费</h2>
+      <span class="note">缺口为当天没有消费</span>
+    </div>
+    <div id="dailyChart" class="chart"></div>
+  </section>
+
+  <div class="grid two">
+    <section class="panel">
+      <div class="panel-head">
+        <h2>预算执行</h2>
+        <span class="note" id="budgetHint"></span>
+      </div>
+      <div id="budgets" class="budgets"></div>
+    </section>
+    <section class="panel">
+      <div class="panel-head">
+        <h2>待确认分类</h2>
+        <span class="badge" id="reviewBadge">0</span>
+      </div>
+      <p class="note block">个人收款码的商户名是昵称，规则和 AI 都不可靠。逐条确认后，所有图表立即重算。</p>
+      <div id="review" class="review"></div>
+    </section>
+  </div>
+
+  <section class="panel">
+    <div class="panel-head">
+      <h2>观察</h2>
+      <span class="note">按当前范围实时计算</span>
+    </div>
+    <ol id="insights" class="insights"></ol>
+  </section>
+
+  <section class="panel">
+    <div class="panel-head">
+      <h2>交易明细</h2>
+      <span class="note" id="tableHint"></span>
+    </div>
+    <div class="filters">
+      <select id="fCategory"></select>
+      <select id="fSource">
+        <option value="all">全部分类来源</option>
+        <option value="rule">规则</option>
+        <option value="ai">AI 建议</option>
+        <option value="override">人工确认</option>
+        <option value="review">待确认</option>
+        <option value="default">未匹配</option>
+        <option value="manual">手动记账</option>
+      </select>
+      <input id="fQuery" type="search" placeholder="搜索商户 / 商品 / 备注">
+      <button class="btn ghost small" id="btnReset">重置</button>
+    </div>
+    <div class="table-wrap">
+      <table id="txTable">
+        <thead>
+          <tr>
+            <th>时间</th><th>商户</th><th>商品</th><th>分类</th><th>来源</th>
+            <th>口径</th><th class="num">金额</th><th class="num">退款</th><th>状态</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <span id="footMeta"></span>
+    <span class="sep">/</span>
+    <span>数据仅保存在本机，未上传任何服务器</span>
+    <span class="sep">/</span>
+    <button class="link" id="btnClear">清除本地修改</button>
+  </footer>
+</main>
+
+<dialog id="entryDialog">
+  <form id="entryForm">
+    <h3>记一笔</h3>
+    <div class="field-row">
+      <label>日期<input type="date" id="eDate" required></label>
+      <label>类型
+        <select id="eDirection">
+          <option value="expense">支出</option>
+          <option value="income">收入</option>
+        </select>
+      </label>
+    </div>
+    <div class="field-row">
+      <label>金额<input type="number" id="eAmount" min="0.01" step="0.01" required placeholder="0.00"></label>
+      <label>分类<select id="eCategory"></select></label>
+    </div>
+    <label>商户 / 对方<input type="text" id="eParty" placeholder="例如：楼下便利店"></label>
+    <label>备注<input type="text" id="eNote" placeholder="可选"></label>
+    <div class="dialog-actions">
+      <button class="btn ghost" type="button" id="eCancel">取消</button>
+      <button class="btn" type="submit" id="eSubmit">保存</button>
+    </div>
+  </form>
+</dialog>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
